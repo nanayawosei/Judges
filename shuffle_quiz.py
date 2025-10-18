@@ -51,28 +51,23 @@ def shuffle_quiz_dataframe(df):
     return shuffled_df
 
 if __name__ == "__main__":
-    # Check for command-line arguments, otherwise use defaults
-    if len(sys.argv) == 3:
-        input_filename = sys.argv[1]
-        output_filename = sys.argv[2]
-    else:
-        # Default files for this specific task
-        input_filename = "New_Shuffled_Kahoot_Quiz.xlsx"
-        output_filename = "Next_Week_Shuffled_Quiz.xlsx"
+    input_files = ["Judges - A.xlsx", "Judges - B.xlsx"]
 
-    try:
-        # 1. Read the quiz from an Excel file
-        initial_df = pd.read_excel(input_filename)
+    for input_filename in input_files:
+        output_filename = f"Shuffled-{input_filename}"
+        try:
+            # 1. Read the quiz from an Excel file
+            initial_df = pd.read_excel(input_filename)
 
-        # 2. Shuffle the DataFrame
-        final_shuffled_df = shuffle_quiz_dataframe(initial_df)
+            # 2. Shuffle the DataFrame
+            final_shuffled_df = shuffle_quiz_dataframe(initial_df)
 
-        # 3. Save the final DataFrame to an Excel file
-        final_shuffled_df.to_excel(output_filename, index=False)
+            # 3. Save the final DataFrame to an Excel file
+            final_shuffled_df.to_excel(output_filename, index=False)
 
-        print(f"Successfully re-shuffled the quiz from '{input_filename}' and saved it to '{output_filename}'")
+            print(f"Successfully re-shuffled the quiz from '{input_filename}' and saved it to '{output_filename}'")
 
-    except FileNotFoundError:
-        print(f"Error: Input file '{input_filename}' not found.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        except FileNotFoundError:
+            print(f"Error: Input file '{input_filename}' not found.")
+        except Exception as e:
+            print(f"An error occurred while processing {input_filename}: {e}")
